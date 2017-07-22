@@ -1,0 +1,47 @@
+<%= form_with(model: encounter, local: true) do |form| %>
+  <% if encounter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(encounter.errors.count, "error") %> prohibited this encounter from being saved:</h2>
+
+      <ul>
+      <% encounter.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :visit_no %>
+    <%= form.text_field :visit_no, id: :encounter_visit_no %>
+  </div>
+
+  <div class="field">
+    <%= form.label :admitted_at %>
+    <%= form.datetime_select :admitted_at, id: :encounter_admitted_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :discharged_at %>
+    <%= form.datetime_select :discharged_at, id: :encounter_discharged_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location, id: :encounter_location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :room %>
+    <%= form.text_field :room, id: :encounter_room %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bed %>
+    <%= form.number_field :bed, id: :encounter_bed %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

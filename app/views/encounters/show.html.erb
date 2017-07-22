@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Visit no:</strong>
+  <%= @encounter.visit_no %>
+</p>
+
+<p>
+  <strong>Admitted at:</strong>
+  <%= @encounter.admitted_at %>
+</p>
+
+<p>
+  <strong>Discharged at:</strong>
+  <%= @encounter.discharged_at %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @encounter.location %>
+</p>
+
+<p>
+  <strong>Room:</strong>
+  <%= @encounter.room %>
+</p>
+
+<p>
+  <strong>Bed:</strong>
+  <%= @encounter.bed %>
+</p>
+
+<%= link_to 'Edit', edit_encounter_path(@encounter) %> |
+<%= link_to 'Back', encounters_path %>
