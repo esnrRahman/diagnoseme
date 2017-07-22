@@ -16,7 +16,12 @@
     <%= form.text_field :first_name, id: :patient_first_name %>
   </div>
 
-  <div class="field">
+    <div class="field">
+      <%= form.label :middle_name %>
+      <%= form.text_field :middle_name, id: :patient_middle_name %>
+    </div>
+
+    <div class="field">
     <%= form.label :last_name %>
     <%= form.text_field :last_name, id: :patient_last_name %>
   </div>
@@ -33,10 +38,11 @@
 
   <div class="field">
     <%= form.label :mrn %>
-    <%= form.number_field :mrn, id: :patient_mrn %>
+    <%= form.text_field :mrn, id: :patient_mrn %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Submit" %>
   </div>
+
 <% end %>
