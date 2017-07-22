@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  visit_no: MyString
+  admitted_at: 2017-07-22 16:01:41
+  discharged_at: 2017-07-22 16:01:41
+  location: MyString
+  room: MyString
+  bed: 1
+
+two:
+  visit_no: MyString
+  admitted_at: 2017-07-22 16:01:41
+  discharged_at: 2017-07-22 16:01:41
+  location: MyString
+  room: MyString
+  bed: 1
