@@ -34,7 +34,7 @@
 
 <h2>Encounters</h2>
 
-<%= button_to "Add Encounter", new_encounter_path, :method => :get %>
+<%= button_to "Add Encounter", new_patient_encounter_path(@patient), :method => :get %>
 
 <br>
 
@@ -54,7 +54,7 @@
         <td><%= encounter.visit_no %></td>
         <td><%= encounter.admitted_at %></td>
         <td><%= encounter.discharged_at %></td>
-        <td><%= link_to 'Show', encounter %> <%= link_to 'Edit', edit_encounter_path(encounter) %> <%= link_to 'Destroy', encounter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', patient_encounter_path(@patient, encounter) %> <%= link_to 'Edit', edit_patient_encounter_path(@patient, encounter) %> <%= link_to 'Destroy', patient_encounter_path(@patient), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
   <% end %>
   </tbody>
