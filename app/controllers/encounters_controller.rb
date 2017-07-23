@@ -1,4 +1,5 @@
 class EncountersController < ApplicationController
+  before_action :set_patient
   before_action :set_encounter, only: [:show, :edit, :update, :destroy]
 
   # GET /encounters
@@ -28,7 +29,7 @@ class EncountersController < ApplicationController
 
     respond_to do |format|
       if @encounter.save
-        format.html { redirect_to @encounter, notice: 'Encounter was successfully created.' }
+        format.html { redirect_to patient_url(:id => @patient.id), notice: 'Encounter was successfully created.' }
         format.json { render :show, status: :created, location: @encounter }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class EncountersController < ApplicationController
   def update
     respond_to do |format|
       if @encounter.update(encounter_params)
-        format.html { redirect_to @encounter, notice: 'Encounter was successfully updated.' }
+        format.html { redirect_to patient_url(:id => @patient.id), notice: 'Encounter was successfully updated.' }
         format.json { render :show, status: :ok, location: @encounter }
       else
         format.html { render :edit }
@@ -56,19 +57,23 @@ class EncountersController < ApplicationController
   def destroy
     @encounter.destroy
     respond_to do |format|
-      format.html { redirect_to encounters_url, notice: 'Encounter was successfully destroyed.' }
+      format.html { redirect_to patient_encounters_url, notice: 'Encounter was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_patient
+      @patient = Patient.find(params[:patient_id])
+    end
+
     def set_encounter
       @encounter = Encounter.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def encounter_params
-      params.require(:encounter).permit(:visit_no, :admitted_at, :discharged_at, :location, :room, :bed)
+      params.require(:encounter).permit(:visit_no, :admitted_at, :discharged_at, :location, :room, :bed).merge(:patient_id => params[:patient_id])
     end
 end

@@ -1,8 +1,20 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Patient's Details</h1>
+
+<p>
+  <strong>MRN:</strong>
+  <%= @patient.mrn %>
+</p>
+
 <p>
   <strong>First name:</strong>
   <%= @patient.first_name %>
+</p>
+
+<p>
+  <strong>Middle name:</strong>
+  <%= @patient.middle_name %>
 </p>
 
 <p>
@@ -16,14 +28,38 @@
 </p>
 
 <p>
-  <strong>Height:</strong>
+  <strong>Height (in cm):</strong>
   <%= @patient.height %>
 </p>
 
-<p>
-  <strong>Mrn:</strong>
-  <%= @patient.mrn %>
-</p>
+<h2>Encounters</h2>
 
-<%= link_to 'Edit', edit_patient_path(@patient) %> |
-<%= link_to 'Back', patients_path %>
+<%= button_to "Add Encounter", new_patient_encounter_path(@patient), :method => :get %>
+
+<br>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Visit Number</th>
+    <th>Admitted At</th>
+    <th>Discharged At</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @encounters.each do |encounter| %>
+      <tr>
+        <td><%= encounter.visit_no %></td>
+        <td><%= encounter.admitted_at %></td>
+        <td><%= encounter.discharged_at %></td>
+        <td><%= link_to 'Show', patient_encounter_path(@patient, encounter) %> <%= link_to 'Edit', edit_patient_encounter_path(@patient, encounter) %> <%= link_to 'Destroy', patient_encounter_path(@patient), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= button_to 'Back', patients_path, method: :get %>

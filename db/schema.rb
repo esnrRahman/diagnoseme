@@ -16,25 +16,25 @@ ActiveRecord::Schema.define(version: 20170722200141) do
   enable_extension "plpgsql"
 
   create_table "encounters", force: :cascade do |t|
+    t.bigint "patient_id"
     t.string "visit_no"
     t.datetime "admitted_at"
     t.datetime "discharged_at"
     t.string "location"
     t.string "room"
     t.integer "bed"
-    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_encounters_on_patient_id"
   end
 
   create_table "patients", force: :cascade do |t|
+    t.string "mrn"
     t.string "first_name"
     t.string "middle_name"
     t.string "last_name"
     t.integer "weight"
     t.integer "height"
-    t.integer "mrn"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

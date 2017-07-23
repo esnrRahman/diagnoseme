@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Encounter Details</h1>
+
 <p>
   <strong>Visit no:</strong>
   <%= @encounter.visit_no %>
@@ -30,5 +32,9 @@
   <%= @encounter.bed %>
 </p>
 
-<%= link_to 'Edit', edit_encounter_path(@encounter) %> |
-<%= link_to 'Back', encounters_path %>
+
+<%= link_to 'Back', patient_path(@patient) %>
+
+<%= button_to 'Edit', edit_patient_encounter_path(@patient, @encounter), method: :get %>
+
+<%= link_to 'Destroy', patient_encounter_path(@patient), method: :delete, data: { confirm: 'Are you sure?' } %>
