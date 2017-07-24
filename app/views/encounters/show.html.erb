@@ -37,4 +37,4 @@
 
 <%= button_to 'Edit', edit_patient_encounter_path(@patient, @encounter), method: :get %>
 
-<%= link_to 'Destroy', patient_encounter_path(@patient), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Destroy', patient_encounter_path(@patient, @encounter), method: :delete, data: { confirm: 'Are you sure?' } %>

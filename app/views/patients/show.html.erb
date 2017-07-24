@@ -23,7 +23,7 @@
 </p>
 
 <p>
-  <strong>Weight:</strong>
+  <strong>Weight (in kg):</strong>
   <%= @patient.weight %>
 </p>
 
@@ -54,7 +54,7 @@
         <td><%= encounter.visit_no %></td>
         <td><%= encounter.admitted_at %></td>
         <td><%= encounter.discharged_at %></td>
-        <td><%= link_to 'Show', patient_encounter_path(@patient, encounter) %> <%= link_to 'Edit', edit_patient_encounter_path(@patient, encounter) %> <%= link_to 'Destroy', patient_encounter_path(@patient), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', patient_encounter_path(@patient, encounter) %> <%= link_to 'Edit', edit_patient_encounter_path(@patient, encounter) %> <%= link_to 'Destroy', patient_encounter_path(@patient, encounter), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
   <% end %>
   </tbody>

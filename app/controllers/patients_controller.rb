@@ -10,7 +10,7 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
-    @encounters = Encounter.all
+    @encounters = Encounter.where(patient_id: @patient.id).all
   end
 
   # GET /patients/new
@@ -28,13 +28,31 @@ class PatientsController < ApplicationController
     @patient = Patient.new(patient_params)
 
     respond_to do |format|
-      if @patient.save
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
-        format.json { render :show, status: :created, location: @patient }
-      else
+      if @patient.first_name and @patient.first_name =~ /\d/
+        @patient.errors.add(:first_name, "cannot have numbers in it")
         format.html { render :new }
-        format.json { render json: @patient.errors, status: :unprocessable_entity }
+        format.json { render json: patient.errors, status: :bad_request }
+
+      elsif @patient.middle_name and @patient.middle_name =~ /\d/
+        @patient.errors.add(:middle_name, "cannot have numbers in it")
+        format.html { render :new }
+        format.json { render json: @patient.errors, status: :bad_request }
+
+      elsif @patient.last_name and @patient.last_name =~ /\d/
+        @patient.errors.add(:last_name, "cannot have numbers in it")
+        format.html { render :new }
+        format.json { render json: @patient.errors, status: :bad_request }
+
+      else
+        if @patient.save
+          format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
+          format.json { render :show, status: :created, location: @patient }
+        else
+          format.html { render :new }
+          format.json { render json: @patient.errors, status: :unprocessable_entity }
+        end
       end
+
     end
   end
 
@@ -42,12 +60,29 @@ class PatientsController < ApplicationController
   # PATCH/PUT /patients/1.json
   def update
     respond_to do |format|
-      if @patient.update(patient_params)
-        format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
-        format.json { render :show, status: :ok, location: @patient }
+      if @patient.first_name and @patient.first_name =~ /\d/
+        @patient.errors.add(:first_name, "cannot have numbers in it")
+        format.html { render :new }
+        format.json { render json: patient.errors, status: :bad_request }
+
+      elsif @patient.middle_name and @patient.middle_name =~ /\d/
+        @patient.errors.add(:middle_name, "cannot have numbers in it")
+        format.html { render :new }
+        format.json { render json: @patient.errors, status: :bad_request }
+
+      elsif @patient.last_name and @patient.last_name =~ /\d/
+        @patient.errors.add(:last_name, "cannot have numbers in it")
+        format.html { render :new }
+        format.json { render json: @patient.errors, status: :bad_request }
+
       else
-        format.html { render :edit }
-        format.json { render json: @patient.errors, status: :unprocessable_entity }
+        if @patient.update(patient_params)
+          format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
+          format.json { render :show, status: :ok, location: @patient }
+        else
+          format.html { render :edit }
+          format.json { render json: @patient.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

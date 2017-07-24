@@ -26,14 +26,19 @@ class EncountersController < ApplicationController
   # POST /encounters.json
   def create
     @encounter = Encounter.new(encounter_params)
-
     respond_to do |format|
-      if @encounter.save
-        format.html { redirect_to patient_url(:id => @patient.id), notice: 'Encounter was successfully created.' }
-        format.json { render :show, status: :created, location: @encounter }
-      else
+      if @encounter.discharged_at and @encounter.discharged_at < @encounter.admitted_at
+        @encounter.errors.add(:discharged_at, "cannot be lower than Admitted at")
         format.html { render :new }
-        format.json { render json: @encounter.errors, status: :unprocessable_entity }
+        format.json { render json: @encounter.errors, status: :bad_request }
+      else
+        if @encounter.save
+          format.html { redirect_to patient_url(:id => @patient.id), notice: 'Encounter was successfully created.' }
+          format.json { render :show, status: :created, location: @encounter }
+        else
+          format.html { render :new }
+          format.json { render json: @encounter.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -42,14 +47,21 @@ class EncountersController < ApplicationController
   # PATCH/PUT /encounters/1.json
   def update
     respond_to do |format|
-      if @encounter.update(encounter_params)
-        format.html { redirect_to patient_url(:id => @patient.id), notice: 'Encounter was successfully updated.' }
-        format.json { render :show, status: :ok, location: @encounter }
+      if @encounter.discharged_at and @encounter.discharged_at < @encounter.admitted_at
+        puts "EHSAN: POINT 1"
+        @encounter.errors.add(:discharged_at, "cannot be lower than Admitted at")
+        format.html { render :new }
+        format.json { render json: @encounter.errors, status: :bad_request }
       else
-        format.html { render :edit }
-        format.json { render json: @encounter.errors, status: :unprocessable_entity }
+          if @encounter.update(encounter_params)
+            format.html { redirect_to patient_url(:id => @patient.id), notice: 'Encounter was successfully updated.' }
+            format.json { render :show, status: :ok, location: @encounter }
+          else
+            format.html { render :edit }
+            format.json { render json: @encounter.errors, status: :unprocessable_entity }
+          end
+        end
       end
-    end
   end
 
   # DELETE /encounters/1
@@ -57,7 +69,7 @@ class EncountersController < ApplicationController
   def destroy
     @encounter.destroy
     respond_to do |format|
-      format.html { redirect_to patient_encounters_url, notice: 'Encounter was successfully destroyed.' }
+      format.html { redirect_to patient_url(:id => @patient.id), notice: 'Encounter was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
