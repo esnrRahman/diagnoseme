@@ -30,12 +30,12 @@ class PatientsController < ApplicationController
     respond_to do |format|
 
       validated = true
-      if @patient.first_name and @patient.first_name =~ /\d/
+      if @patient.first_name =~ /\d/
         validated = false
         @patient.errors.add(:first_name, "cannot have numbers in it")
       end
 
-      if @patient.middle_name and @patient.middle_name =~ /\d/
+      if @patient.middle_name =~ /\d/
         validated = false
         @patient.errors.add(:middle_name, "cannot have numbers in it")
       end
@@ -43,6 +43,16 @@ class PatientsController < ApplicationController
       if @patient.last_name and @patient.last_name =~ /\d/
         validated = false
         @patient.errors.add(:last_name, "cannot have numbers in it")
+      end
+
+      if not patient_params[:weight].empty? and patient_params[:weight].count("a-zA-Z") > 0
+        validated = false
+        @patient.errors.add(:weight, "has to be a number")
+      end
+
+      if not patient_params[:height].empty? and patient_params[:height].count("a-zA-Z") > 0
+        validated = false
+        @patient.errors.add(:height, "has to be a number")
       end
 
       if validated and @patient.save
@@ -63,19 +73,29 @@ class PatientsController < ApplicationController
     respond_to do |format|
       validated = true
 
-      if patient_params[:first_name] and patient_params[:first_name] =~ /\d/
+      if patient_params[:first_name] =~ /\d/
         validated = false
         @patient.errors.add(:first_name, "cannot have numbers in it")
       end
 
-      if patient_params[:middle_name] and patient_params[:middle_name] =~ /\d/
+      if patient_params[:middle_name] =~ /\d/
         validated = false
         @patient.errors.add(:middle_name, "cannot have numbers in it")
       end
 
-      if patient_params[:last_name] and patient_params[:last_name] =~ /\d/
+      if not patient_params[:last_name].empty? and patient_params[:last_name] =~ /\d/
         validated = false
         @patient.errors.add(:last_name, "cannot have numbers in it")
+      end
+
+      if not patient_params[:weight].empty? and patient_params[:weight].count("a-zA-Z") > 0
+        validated = false
+        @patient.errors.add(:weight, "has to be a number")
+      end
+
+      if not patient_params[:height].empty? and patient_params[:height].count("a-zA-Z") > 0
+        validated = false
+        @patient.errors.add(:height, "has to be a number")
       end
 
       if validated and @patient.update(patient_params)

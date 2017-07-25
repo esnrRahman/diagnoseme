@@ -29,19 +29,7 @@ class EncountersController < ApplicationController
     respond_to do |format|
       validated = true
 
-      admitted_at_date = DateTime.new(encounter_params[:"admitted_at(1i)"].to_i,
-                                      encounter_params[:"admitted_at(2i)"].to_i,
-                                      encounter_params[:"admitted_at(3i)"].to_i,
-                                      encounter_params[:"admitted_at(4i)"].to_i,
-                                      encounter_params[:"admitted_at(5i)"].to_i)
-
-      discharged_at_date = DateTime.new(encounter_params[:"discharged_at(1i)"].to_i,
-                                        encounter_params[:"discharged_at(2i)"].to_i,
-                                        encounter_params[:"discharged_at(3i)"].to_i,
-                                        encounter_params[:"discharged_at(4i)"].to_i,
-                                        encounter_params[:"discharged_at(5i)"].to_i)
-
-      if discharged_at_date and discharged_at_date < admitted_at_date
+      if not @encounter.discharged_at.nil? and @encounter.discharged_at < @encounter.admitted_at
         validated = false
         @encounter.errors.add(:discharged_at, "cannot be lower than Admitted at")
       end
@@ -62,6 +50,7 @@ class EncountersController < ApplicationController
   def update
     respond_to do |format|
       validated = true
+      discharged_at_date = nil
 
       admitted_at_date = DateTime.new(encounter_params[:"admitted_at(1i)"].to_i,
                                       encounter_params[:"admitted_at(2i)"].to_i,
@@ -69,11 +58,17 @@ class EncountersController < ApplicationController
                                       encounter_params[:"admitted_at(4i)"].to_i,
                                       encounter_params[:"admitted_at(5i)"].to_i)
 
-      discharged_at_date = DateTime.new(encounter_params[:"discharged_at(1i)"].to_i,
+      if not encounter_params[:"discharged_at(1i)"].empty? and
+          not encounter_params[:"discharged_at(2i)"].empty? and
+          not encounter_params[:"discharged_at(3i)"].empty? and
+          not encounter_params[:"discharged_at(4i)"].empty? and
+          not encounter_params[:"discharged_at(5i)"].empty?
+        discharged_at_date = DateTime.new(encounter_params[:"discharged_at(1i)"].to_i,
                                         encounter_params[:"discharged_at(2i)"].to_i,
                                         encounter_params[:"discharged_at(3i)"].to_i,
                                         encounter_params[:"discharged_at(4i)"].to_i,
                                         encounter_params[:"discharged_at(5i)"].to_i)
+      end
 
       if discharged_at_date and discharged_at_date < admitted_at_date
         validated = false
