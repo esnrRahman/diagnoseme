@@ -28,15 +28,20 @@ class PatientsController < ApplicationController
     @patient = Patient.new(patient_params)
 
     respond_to do |format|
+
+      validated = true
       if @patient.first_name and @patient.first_name =~ /\d/
+        validated = false
         @patient.errors.add(:first_name, "cannot have numbers in it")
       end
 
       if @patient.middle_name and @patient.middle_name =~ /\d/
+        validated = false
         @patient.errors.add(:middle_name, "cannot have numbers in it")
       end
 
       if @patient.last_name and @patient.last_name =~ /\d/
+        validated = false
         @patient.errors.add(:last_name, "cannot have numbers in it")
       end
 
